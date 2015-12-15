@@ -34,7 +34,10 @@ p_ol = min(abs(ac1w)*besseli(0,k_hat)/besseli(2,k_hat), 1);
 
 %% Sequential correction
 k_hat = fsolve(@(k)besseli(2,k)./besseli(0,k)*p_ol-(abs(ac1w)), 1, options);
-
+p_ol = min(abs(ac1w)*besseli(0,k_hat)/besseli(2,k_hat), 1);
+k_hat = fsolve(@(k)besseli(2,k)./besseli(0,k)*p_ol-(abs(ac1w)), 1, options);
+p_ol = min(abs(ac1w)*besseli(0,k_hat)/besseli(2,k_hat), 1);
+k_hat = fsolve(@(k)besseli(2,k)./besseli(0,k)*p_ol-(abs(ac1w)), 1, options);
 
 %% Works worse than other methods
 % [mean(cos(1*(phi-2*mu_hat))),mean(cos(2*(phi-2*mu_hat))),mean(cos(3*(phi-2*mu_hat))),mean(cos(4*(phi-2*mu_hat)))]
