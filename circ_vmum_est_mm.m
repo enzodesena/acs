@@ -11,7 +11,8 @@ ac1w = mean(cos(1*(phi-2*mu_hat)));
 
 
 %options = optimoptions('fsolve','TolFun',1E-9);
-k_hat = fsolve(@(k)besseli(4,k)./besseli(2,k)*ac1w-ac2w, 1);
+options = optimset('Display', 'off') ;
+k_hat = fsolve(@(k)besseli(4,k)./besseli(2,k)*ac1w-ac2w, 1, options);
 
 
 %% Assumes prior knowledge that k<100
@@ -32,7 +33,7 @@ k_hat = fsolve(@(k)besseli(4,k)./besseli(2,k)*ac1w-ac2w, 1);
 p_ol = min(abs(ac1w)*besseli(0,k_hat)/besseli(2,k_hat), 1);
 
 %% Sequential correction
-k_hat = fsolve(@(k)besseli(2,k)./besseli(0,k)*p_ol-(abs(ac1w)), 1);
+k_hat = fsolve(@(k)besseli(2,k)./besseli(0,k)*p_ol-(abs(ac1w)), 1, options);
 
 
 %% Works worse than other methods

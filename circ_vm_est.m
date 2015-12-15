@@ -13,7 +13,7 @@ else
     mu_hat = mu;
 end
 
-
+options = optimset('Display', 'off') ;
 k_hat = fsolve(@(x)besseli(1,x)./besseli(0,x) - ...
-        data_circ_r.*cos(data_circ_mean-mu_hat), 1);
+        data_circ_r.*cos(data_circ_mean-mu_hat), 1, options);
 
