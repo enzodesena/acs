@@ -1,4 +1,4 @@
-function [mu_hat, k_hat, p1_hat, p2_hat] = circ_vmum_est_mm(data)
+function [mu_hat, k_hat, p1_hat, p2_hat, p3_hat] = circ_vmum_est_mm(data)
 
 phi = mod(data*2, 2*pi);
 
@@ -56,6 +56,7 @@ k_hat = fsolve(@(k)besseli(2,k)./besseli(0,k)*p_ol-(abs(ac1w)), 1, options);
 a1 = mean(cos(data-mu_hat));
 p1_hat = min(abs(p_ol + a1*besseli(0,k_hat)/besseli(1,k_hat))/2, p_ol);
 p2_hat = p_ol - p1_hat;
+p3_hat = 1-p1_hat-p2_hat;
 
 %% Asserts
 assert(p1_hat>=0 && p1_hat<=1);
