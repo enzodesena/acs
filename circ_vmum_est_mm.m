@@ -1,9 +1,15 @@
-function [mu_hat, k_hat, p1_hat, p2_hat, p3_hat] = circ_vmum_est_mm(data)
+function [mu_hat, k_hat, p1_hat, p2_hat, p3_hat] = circ_vmum_est_mm(data, mu)
 
 phi = mod(data*2, 2*pi);
 
 %% Estimate mu
-mu_hat = circ_mean(phi)/2;
+if nargin == 2 % if mu is known, then mu_hat = mu
+    mu_hat = mu;
+else
+    mu_hat = circ_mean(phi)/2;
+end
+
+
 
 %% Estimate k
 ac2w = mean(cos(2*(phi-2*mu_hat)));
