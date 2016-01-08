@@ -9,8 +9,8 @@ end
 [mu_hat_0, k_hat_0, p1_hat_0, p2_hat_0, p3_hat_0] = circ_vmum_est_mm(data, mu);
 [mu_hat_1, k_hat_1, p1_hat_1, p2_hat_1, p3_hat_1] = circ_vmum_est_mm(data);
 
-llrt = getll(mu_hat_1, k_hat_1, p1_hat_1, p2_hat_1, p3_hat_1) - ...
-       getll(mu_hat_0, k_hat_0, p1_hat_0, p2_hat_0, p3_hat_0);
+llrt = getll(mu_hat_1, k_hat_1, p1_hat_1, p2_hat_1, p3_hat_1, data) - ...
+       getll(mu_hat_0, k_hat_0, p1_hat_0, p2_hat_0, p3_hat_0, data);
 
 P = 1 - chi2cdf(2*llrt, 1);
 
