@@ -1,4 +1,4 @@
-function [H,P] = circ_vmum_test_one_sample(data, mu)
+function [H, P, llrt] = circ_vmum_test_one_sample(data, mu)
 
 alpha = 0.05;
 
