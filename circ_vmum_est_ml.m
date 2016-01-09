@@ -1,6 +1,10 @@
-function [mu_hat, k_hat, p1_hat, p2_hat, p3_hat, ll] = circ_vmum_est_ml(data, mu_0, k_0, p1_0, p2_0, p3_0)
-options = optimoptions('fmincon', 'Display', 'off');
-
+function [mu_hat, k_hat, p1_hat, p2_hat, p3_hat, ll] = ...
+    circ_vmum_est_ml(data, mu_0, k_0, p1_0, p2_0, p3_0, verb)
+if nargin == 6 || verb == false
+    options = optimoptions('fmincon', 'Display', 'off');
+else
+    options = optimoptions('fmincon');
+end
 
 %% Asserts
 assert(p1_0>=0.0 & p1_0<=1.0);
