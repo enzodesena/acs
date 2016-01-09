@@ -1,6 +1,20 @@
-function [mu_hat, k_hat, p1_hat, p2_hat, p3_hat, ll] = circ_vmum_est_ml(data, mu_0, k_0, p1_0, p2_0, p3_0)
-options = optimoptions('fmincon', 'Display', 'off');
+function [mu_hat, k_hat, p1_hat, p2_hat, p3_hat, ll, exitflag, output] = ...
+    circ_vmum_est_ml(data, mu_0, k_0, p1_0, p2_0, p3_0, varargin)
+%CIRC_VMUM_EST_ML    calculates ML estimate of vMUM model parameters
+%   CIRC_VMUM_EST_ML(data) calculates ML estimate of vMUM model parameters
+%   with initial point given by the vMUM-MME estimator
+%
+%   CIRC_VMUM_EST_ML(data, mu_0, k_0, p1_0, p2_0, p3_0) calculates
+%   estimate using [mu_0, k_0, p1_0, p2_0, p3_0] as initial point
+%
+%   Audio Circular Statistics (ACS) library
+%   Copyright 2016 Enzo De Sena
 
+
+%% Initial point
+if nargin == 1
+    [mu_0, k_0, p1_0, p2_0, p3_0] = circ_vmum_est_mm(data);
+end
 
 %% Asserts
 assert(p1_0>=0.0 & p1_0<=1.0);
@@ -11,35 +25,27 @@ assert(isscalar(mu_0) & isscalar(k_0));
 assert(isscalar(p1_0) & isscalar(p2_0) & isscalar(p3_0));
 assert(isvector(data));
 
-%% Adjust initial point to problem domain
-if k_0 < 0
-    k_0 = -k_0;
-    mu_0 = mu_0 + pi;
-    temp = p1_0;
-    p1_0 = p2_0;
-    p2_0 = temp;
+%% Add options to fmincon
+if nargin > 6
+    options = optimoptions('fmincon', varargin{:});
+else
+    options = optimoptions('fmincon', 'Display', 'none');
 end
-mu_0 = mod(mu_0, 2*pi);
 
 %% Run
-params = fmincon(@(params) ...
-           -getll(params, data), ...
-           [mu_0, k_0, p1_0, p2_0, p3_0], [], [], [0, 0, 1, 1, 1], 1, ...
-           [0, 0, 0, 0, 0], [2*pi, inf, 1, 1, 1], [], options);
+[params, ll_neg, exitflag, output] = fmincon(@(params) ...
+                   -circ_vmum_ll(params(1), params(2), params(3), ...
+                                 params(4), params(5), data), ...
+                   [mu_0, k_0, p1_0, p2_0, p3_0], [], [], ...
+                   [0, 0, 1, 1, 1], 1, ...
+                   [-inf, -inf, 0, 0, 0], [inf, inf, 1, 1, 1], ...
+                   [], options);
        
 %% Assign output values
-ll = getll(params, data);
+ll = ll_neg;
 
-mu_hat = params(1);
-k_hat  = params(2);
-p1_hat = params(3);
-p2_hat = params(4);
-p3_hat = params(5);
+[mu_hat, k_hat, p1_hat, p2_hat, p3_hat] = ...
+    circ_vmum_standard(params(1), params(2), ...
+                       params(3), params(4), params(5));
 
-end
-
-function l = getll(params, data)
-l = sum(log(circ_vmm_pdf([params(1), params(1)+pi, 0], ...
-                         [params(2), params(2), 0], ...
-                         [params(3), params(4), params(5)], data)));
 end
