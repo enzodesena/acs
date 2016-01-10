@@ -1,7 +1,13 @@
 function [mu_hat, k_hat, p] = circ_vmm3_est_mm(data)
-% Returns the three paramters of a mixture of von Mises distribution:
-% p*exp(k*cos(theta-mu)/I0(k) + (1-p)*exp(-k*cos(theta-mu)/I0(k)
-% using method explained in [Mardia and Jupp, 2000]
+%CIRC_VMM3_EST_MM method of moment estimate of the vMM3 model
+%   [mu_hat, k_hat, p] = CIRC_VMM3_EST_MM(data) returns the method 
+%   of moment estimate of the parameters of the
+%   three paramters of a mixture of von Mises distribution:
+%   p*exp(k*cos(theta-mu)/I0(k) + (1-p)*exp(-k*cos(theta-mu)/I0(k)
+%   using method explained in [Mardia and Jupp, 2000]
+% 
+%   Audio Circular Statistics (ACS) library
+%   Copyright 2016 Enzo De Sena
 
 psi = mod(data*2, 2*pi);
 

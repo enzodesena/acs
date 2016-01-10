@@ -1,5 +1,10 @@
 function [opt_mu, opt_ks, opt_p1, opt_p2, opt_p3, max_ll] = ...
     circ_vmum_est_fs(data, mus, ks, p1s, p2s)
+%CIRC_VMUM_EST_FS full search estimation of vMUM model parameters
+% 
+%   Audio Circular Statistics (ACS) library
+%   Copyright 2016 Enzo De Sena
+
 
 max_ll = - Inf;
 opt_mu = nan;

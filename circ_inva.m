@@ -1,9 +1,13 @@
 function y = circ_inva(R)
-%APPROXINVBESSEL Approximation of inverse Bessel
-%   Returns an approximation of the solution to the problem
-%   besseli(1, x)/besseli(0,x) - R = 0
+%CIRC_INVA Approximation of inverse Bessel
+%   y = CIRC_INVA(R) Returns an approximation of the solution to the 
+%   problem besseli(1, x)/besseli(0,x) - R = 0
 %   using approximation given in (5.3.11)
 %   in Mardia, "Directional Statistics"
+% 
+%   Audio Circular Statistics (ACS) library
+%   Copyright 2016 Enzo De Sena
+
 assert(all(R >= 0 & R <= 1));
 y = (1.28 - 0.53.*R.^2).*tan(pi.*R./2);
 

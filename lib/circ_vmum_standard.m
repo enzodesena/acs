@@ -4,6 +4,7 @@ function [mu, k, p1, p2, p3] = circ_vmum_standard(mu, k, p1, p2, p3)
 %   the parameters of the vMUM distribution to a standard form 
 %   with k>0, p1 >= p2, and mu between 0 and 2*pi
 % 
+%   Audio Circular Statistics (ACS) library
 %   Copyright 2016 Enzo De Sena
 
 %% Asserts

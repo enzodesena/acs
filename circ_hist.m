@@ -1,10 +1,20 @@
 function [pdf_thetas, pdf_data] = circ_hist(data, resolution, linespec)
+%CIRC_HIST circular histogram
+%   [pdf_thetas, pdf_data] = CIRC_HIST(data, resolution) returns
+%   the x axis values pdf_thetas and y axis values for a histogram
+%   of given data and resolution
+% 
+%   Audio Circular Statistics (ACS) library
+%   Copyright 2016 Enzo De Sena
 
 if nargin == 2
     linespec = '';
 end
 
-%data = wrapToMinusPiPi(data(:));
+assert(isvector(data));
+assert(isscalar(resolution));
+
+
 [N, pdf_thetas] = hist(data, -pi:resolution:pi);
 
 pdf_data =  N./trapz(pdf_thetas, N);

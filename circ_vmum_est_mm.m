@@ -1,4 +1,8 @@
 function [mu_hat, k_hat, p1_hat, p2_hat, p3_hat] = circ_vmum_est_mm(data, mu)
+%CIRC_VMUM_EST_MM    calculates MM estimate of vMUM model parameters
+%
+%   Audio Circular Statistics (ACS) library
+%   Copyright 2016 Enzo De Sena
 
 phi = mod(data*2, 2*pi);
 

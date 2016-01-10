@@ -1,5 +1,8 @@
 function obs = circ_vmm_rnd(mu, kappa, p, N)
-%% Generates a random sample of a von Mises mixture
+%CIRC_VMM_RND generates a random sample of a von Mises mixture
+% 
+%   Audio Circular Statistics (ACS) library
+%   Copyright 2016 Enzo De Sena
 
 %% Checks
 assert(isvector(mu));

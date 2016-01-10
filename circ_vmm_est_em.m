@@ -1,5 +1,8 @@
-function circ_vmm_em(data)
-
+function circ_vmm_est_em(data)
+%CIRC_VMM_EST_EM expectation maximisation estimation of von Mises mixtures
+% 
+%   Audio Circular Statistics (ACS) library
+%   Copyright 2016 Enzo De Sena
 
 data = data(:);
 

@@ -1,4 +1,8 @@
 function pdf = circ_vmm_pdf(mu, k, p, theta)
+%CIRC_VMM_PDF returns PDF values of von Mises mixture
+% 
+%   Audio Circular Statistics (ACS) library
+%   Copyright 2016 Enzo De Sena
 
 %% Asserts
 assert(isvector(mu));
