@@ -11,7 +11,7 @@ assert(isscalar(p1));
 assert(isscalar(p2));
 assert(isscalar(p3));
 assert(isvector(data));
-circ_vmum_asserts(mu, k, p1, p2, p3, 1e-5);
+circ_vmum_asserts(mu, k, p1, p2, p3, 1e-3);
 
 %% Calculate
 ll = sum(log(circ_vmum_pdf(mu, k, p1, p2, p3, data)));

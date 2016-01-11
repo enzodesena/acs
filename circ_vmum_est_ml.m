@@ -41,9 +41,6 @@ circ_vmum_asserts(mu_0, k_0, p1_0, p2_0, p3_0);
                    [-inf, -inf, 0, 0, 0], [inf, inf, 1, 1, 1], ...
                    [], options);
        
-if exitflag <= 0
-   warning(strcat('exitflag was ', num2str(exitflag)));
-end
 
 %% Assign output values
 ll = -ll_neg;

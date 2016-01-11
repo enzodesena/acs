@@ -28,10 +28,6 @@ options = optimoptions('fmincon', ...
                    [-inf, 0, 0, 0], [inf, 1, 1, 1], ...
                    [], options);
        
-if exitflag <= 0
-   warning(strcat('exitflag was ', num2str(exitflag)));
-end
-
 ll_0 = -ll_0_neg;
 
 %% Calculate ll of alternate hypothesis
