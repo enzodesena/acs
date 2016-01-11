@@ -47,7 +47,7 @@ if exitflag <= 0
 end
 
 %% Assign output values
-ll = ll_neg;
+ll = -ll_neg;
 
 [mu_hat, k_hat, p1_hat, p2_hat, p3_hat] = ...
     circ_vmum_standard(params(1), params(2), ...
