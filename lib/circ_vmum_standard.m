@@ -26,3 +26,9 @@ end
     
 %% Convert mu
 mu = mod(mu, 2*pi);
+
+%% Correct p1, p2, p3 (sometimes these numbers deviate slightly from sum=1)
+temp = p1 + p2 + p3;
+p1 = p1./temp;
+p2 = p2./temp;
+p3 = p3./temp;

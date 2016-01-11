@@ -15,5 +15,6 @@ circ_vmum_asserts(mu, k, p1, p2, p3, 1e-5);
 
 %% Calculate
 ll = sum(log(circ_vmum_pdf(mu, k, p1, p2, p3, data)));
+assert(not(isnan(ll)));
 
 end

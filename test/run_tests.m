@@ -11,4 +11,12 @@ end
 
 assert(all(abs(epmf-pmf) < 0.01));
 
+%% Testing vM for large kappa
+thetas = linspace(-4*pi,4*pi,1000);
+vm_uncorrected = circ_vm_pdf(0, 600, thetas, false);
+vm_corrected = circ_vm_pdf(0, 600, thetas, true);
+assert(all(abs(vm_corrected-vm_uncorrected)<1e-2));
+
+assert(all(not(isnan(circ_vm_pdf(0, 10000, thetas, true)))));
+
 display('All tests passed!');

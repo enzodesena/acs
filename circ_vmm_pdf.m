@@ -14,5 +14,8 @@ assert(isvector(theta));
 
 pdf = zeros(size(theta));
 for i=1:length(mu)
-    pdf = pdf + p(i)/(2*pi*besseli(0,k(i)))*exp(k(i)*cos(theta-mu(i)));
+    pdf = pdf + p(i).*circ_vm_pdf(mu(i), k(i), theta);
+
 end
+
+assert(all(not(isnan(pdf))));
