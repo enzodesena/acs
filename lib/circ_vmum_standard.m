@@ -8,20 +8,12 @@ function [mu, k, p1, p2, p3] = circ_vmum_standard(mu, k, p1, p2, p3)
 %   Copyright 2016 Enzo De Sena
 
 %% Asserts
-assert(p1>=0.0 & p1<=1.0);
-assert(p2>=0.0 & p2<=1.0);
-assert(p3>=0.0 & p3<=1.0);
-assert(abs((p1+p2+p3)-1.0)<1E-10);
-assert(isscalar(mu) & isscalar(k));
-assert(isscalar(p1) & isscalar(p2) & isscalar(p3));
+circ_vmum_asserts(mu, k, p1, p2, p3);
 
 %% Convert k<0
 if k < 0
     k = -k;
     mu = mu + pi;
-    temp = p1;
-    p1 = p2;
-    p2 = temp;
 end
 
 %% Convert p1 < p2
