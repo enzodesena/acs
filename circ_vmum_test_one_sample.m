@@ -1,4 +1,4 @@
-function [H, P, llrt] = circ_vmum_test_one_sample_ml(data, mu)
+function [H, P, llrt, exitflag] = circ_vmum_test_one_sample_ml(data, mu)
 %CIRC_VMUM_REST_ONE_SAMPLE_MM one sample test for vMUM model
 %
 %   Audio Circular Statistics (ACS) library
@@ -20,25 +20,26 @@ assert(isscalar(mu));
 
 options = optimoptions('fmincon', ...
         'Display', 'notify-detailed', ...
-        'Algorithm', 'sqp');
+        'Algorithm', 'sqp', ...
+        'MaxFunEvals', 2000);
 
-[params, ll_0_neg] = fmincon(@(params) ...
+[params, ll_0_neg, exitflag_0] = fmincon(@(params) ...
                    -circ_vmum_ll(mu, params(1), params(2), params(3), params(4), data, true), ...
                    [k_mm_0, p1_mm_0, p2_mm_0, p3_mm_0], [], [], ...
                    [0, 1, 1, 1], 1, ...
                    [-inf, 0, 0, 0], [inf, 1, 1, 1], ...
                    [], options);
-       
 ll_0 = -ll_0_neg;
 
 %% Calculate ll of alternate hypothesis
-[~, ~, ~, ~, ~, ll_1, ~, ~] = ...
+[~, ~, ~, ~, ~, ll_1, exitflag_1, ~] = ...
     circ_vmum_est_ml(data, mu, params(1), params(2), params(3), params(4), options);
    
+exitflag = min(exitflag_0, exitflag_1);
 
 %% Run test
 llrt = -2*(ll_0-ll_1);
-P = 1 - chi2cdf(2*llrt, 1);
+P = 1 - chi2cdf(llrt, 1);
 H = P < alpha;
 
 end

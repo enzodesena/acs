@@ -19,23 +19,25 @@ assert(is_equal(circ_vmum_pdf(mu, k, p1, p2, p3, linspace(0,2*pi,100)),...
 assert(is_equal(circ_vmum_pdf(mu, k, p1, p2, p3, linspace(0,2*pi,100)),...
                 circ_vmum_pdf(pi, -10, 0.3, 0.5, 0.2, linspace(0,2*pi,100))));
 
-display('All tests passed!');
-
-end
-
-function result = is_equal(a, b, tol)
-if nargin == 2
-    tol = 1e-10;
-end
-
-assert(all(abs(epmf-pmf) < 0.01));
 
 %% Testing vM for large kappa
 thetas = linspace(-4*pi,4*pi,1000);
 vm_uncorrected = circ_vm_pdf(0, 600, thetas, false);
 vm_corrected = circ_vm_pdf(0, 600, thetas, true);
-assert(all(abs(vm_corrected-vm_uncorrected)<1e-2));
+assert(is_equal(vm_corrected, vm_uncorrected, 1e-2));
 
 assert(all(not(isnan(circ_vm_pdf(0, 10000, thetas, true)))));
 
 display('All tests passed!');
+
+end
+
+
+
+
+function result = is_equal(a, b, tol)
+if nargin == 2
+    tol = 1e-10;
+end
+result = all(abs(a-b)<tol);
+end
