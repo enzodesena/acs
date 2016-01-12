@@ -32,7 +32,6 @@ options = optimoptions('fmincon', ...
 ll_0 = -ll_0_neg;
 
 %% Calculate ll of alternate hypothesis
-[params(2), params(3), params(4)]
 [~, ~, ~, ~, ~, ll_1, ~, ~] = ...
     circ_vmum_est_ml(data, mu, params(1), params(2), params(3), params(4), options);
    
