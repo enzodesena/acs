@@ -1,4 +1,4 @@
-function [mu_hat, k_hat, p] = circ_vmm3_est_mm(data)
+function [mu_hat, k_hat, p, ll] = circ_vmm3_est_mm(data)
 %CIRC_VMM3_EST_MM method of moment estimate of the vMM3 model
 %   [mu_hat, k_hat, p] = CIRC_VMM3_EST_MM(data) returns the method 
 %   of moment estimate of the parameters of the
