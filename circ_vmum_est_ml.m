@@ -27,7 +27,7 @@ end
 assert(isscalar(mu_0) & isscalar(k_0));
 assert(isscalar(p1_0) & isscalar(p2_0) & isscalar(p3_0));
 assert(isvector(data));
-circ_vmum_asserts(mu_0, k_0, p1_0, p2_0, p3_0);
+circ_vmum_asserts(mu_0, k_0, p1_0, p2_0, p3_0, 1e-6);
 
 
 %% Run
