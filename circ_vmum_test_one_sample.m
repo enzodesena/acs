@@ -39,10 +39,21 @@ assert(abs(mu_mm_0-mu)<1e-10);
 ll_0 = -ll_0_neg;
 
 %% Calculate ll of alternate hypothesis
-[~, ~, ~, ~, ~, ll_1, exitflag_1, ~] = ...
+[~, ~, ~, ~, ~, ll_1_a, exitflag_1_a, ~] = ...
     circ_vmum_est_ml(data, mu, params_0(1), ...
                      params_0(2), params_0(3), params_0(4), options);
-   
+                 
+[mu_mm, k_mm, p1_mm, p2_mm, p3_mm] = circ_vmum_est_mm(data);
+[~, ~, ~, ~, ~, ll_1_b, exitflag_1_b, ~] = ...
+    circ_vmum_est_ml(data, mu_mm, k_mm, p1_mm, p2_mm, p3_mm, options);
+
+if ll_1_a > ll_1_b
+    ll_1 = ll_1_a;
+    exitflag_1 = exitflag_1_a;
+else
+    ll_1 = ll_1_b;
+    exitflag_1 = exitflag_1_b;
+end
 
 %% Run test
 llrt = -2*(ll_0-ll_1);

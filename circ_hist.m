@@ -7,14 +7,18 @@ function [pdf_thetas, pdf_data] = circ_hist(data, resolution, linespec)
 %   Audio Circular Statistics (ACS) library
 %   Copyright 2016 Enzo De Sena
 
-if nargin == 2
+if nargin == 1
+    resolution = pi/100;
+end
+
+if nargin < 2
     linespec = '';
 end
 
 assert(isvector(data));
 assert(isscalar(resolution));
 
-
+data = wrappi(data);
 [N, pdf_thetas] = hist(data, -pi:resolution:pi);
 
 pdf_data =  N./trapz(pdf_thetas, N);
@@ -25,9 +29,4 @@ if nargout < 2
     plot(pdf_thetas, pdf_data, linespec);
 end
 
-end
-
-% wraps to -pi pi
-function wrapped_angle = wrapToMinusPiPi(angle)
-wrapped_angle = mod(angle+pi,2*pi)-pi;
 end
