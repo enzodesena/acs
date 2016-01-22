@@ -18,7 +18,7 @@ L = length(mu);
 %% Run
 z_obs = drnd(1:L, p, N); % Observations of the hidden variable
 for l=1:L
-    obs = [obs; circ_vmrnd(mu(l), kappa(l), sum(z_obs == l))];
+    obs = [obs; mod(circ_vmrnd(mu(l), kappa(l), sum(z_obs == l)),2*pi)];
 end
 assert(length(obs) == N);
 
