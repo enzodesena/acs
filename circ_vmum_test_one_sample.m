@@ -5,11 +5,11 @@ function [H, P, llrt, exitflag] = circ_vmum_test_one_sample(data, mu, alpha, opt
 %   Copyright 2016 Enzo De Sena
 
 
-if nargin == 1 || isempty(mu)
+if nargin < 1 || isempty(mu)
     mu = 0;
 end
 
-if nargin == 2 || isempty(alpha)
+if nargin < 2 || isempty(alpha)
     alpha = 0.05;
 end
 
