@@ -22,3 +22,8 @@ options = optimset('Display', 'off') ;
 k_hat = fsolve(@(x)besseli(1,x)./besseli(0,x) - ...
         data_circ_r.*cos(data_circ_mean-mu_hat), 1, options);
 
+if k_hat<0
+    k_hat = -k_hat;
+    mu_hat = mu_hat + pi;
+end
+mu_hat = mod(mu_hat, 2*pi);
