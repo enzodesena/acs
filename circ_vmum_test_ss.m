@@ -21,7 +21,7 @@ if nargin <= 3
 end
 
 %% Assert
-assert(isvector(data));
+assert(iscolumn(data));
 assert(isscalar(mu));
 assert(isscalar(alpha));
 

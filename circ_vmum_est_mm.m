@@ -4,10 +4,15 @@ function [mu_hat, k_hat, p1_hat, p2_hat, p3_hat] = circ_vmum_est_mm(data, mu)
 %   Audio Circular Statistics (ACS) library
 %   Copyright 2016 Enzo De Sena
 
+%% Asserts
+assert(iscolumn(data));
+assert(length(data) >= 1);
+
 phi = mod(data*2, 2*pi);
 
 %% Estimate mu
 if nargin == 2 % if mu is known, then mu_hat = mu
+    assert(isscalar(mu));
     mu_hat = mu;
 else
     mu_hat = circ_mean(phi)/2;
@@ -21,7 +26,7 @@ ac1w = mean(cos(1*(phi-2*mu_hat)));
 
 
 %options = optimoptions('fsolve','TolFun',1E-9);
-options = optimset('Display', 'off') ;
+options = optimset('Display', 'off');
 k_hat = fsolve(@(k)besseli(4,k)./besseli(2,k)*ac1w-ac2w, 1, options);
 
 
@@ -72,5 +77,4 @@ p3_hat = 1-p1_hat-p2_hat;
 assert(p1_hat>=0 && p1_hat<=1);
 assert(p2_hat>=0 && p2_hat<=1);
 assert((1-p1_hat-p2_hat)>=0 && (1-p1_hat-p2_hat)<=1);
-
 

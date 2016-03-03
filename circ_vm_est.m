@@ -9,6 +9,10 @@ function [mu_hat, k_hat] = circ_vm_est(data, mu)
 %   Audio Circular Statistics (ACS) library
 %   Copyright 2016 Enzo De Sena
 
+%% Asserts
+assert(iscolumn(data));
+
+%% Estimation
 data_circ_mean = circ_mean(data);
 data_circ_r = circ_r(data);
 

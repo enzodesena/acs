@@ -15,7 +15,7 @@ if nargin < 2
     linespec = '';
 end
 
-assert(isvector(data));
+assert(iscolumn(data));
 assert(isscalar(resolution));
 
 data = wrappi(data);

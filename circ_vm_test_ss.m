@@ -15,7 +15,7 @@ end
 
 
 %% Assert
-assert(isvector(data));
+assert(iscolumn(data));
 assert(isscalar(mu_0));
 assert(isscalar(alpha));
 

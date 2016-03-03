@@ -12,6 +12,7 @@ function [mu_hat, k_hat, p1_hat, p2_hat, p3_hat, ll, exitflag, output] = ...
 
 
 %% Initial point
+assert(iscolumn(data));
 if nargin == 1
     [mu_0, k_0, p1_0, p2_0, p3_0] = circ_vmum_est_mm(data);
 end

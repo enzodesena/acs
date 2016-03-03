@@ -6,6 +6,8 @@ function [opt_mu, opt_ks, opt_p1, opt_p2, opt_p3, max_ll] = ...
 %   Copyright 2016 Enzo De Sena
 
 
+assert(iscolumn(data));
+
 max_ll = - Inf;
 opt_mu = nan;
 opt_ks = nan;

@@ -9,6 +9,10 @@ function [mu_hat, k_hat, p] = circ_vmm3_est_mm(data, mu)
 %   Audio Circular Statistics (ACS) library
 %   Copyright 2016 Enzo De Sena
 
+%% Asserts
+assert(iscolumn(data));
+
+%% Estimation
 psi = mod(data*2, 2*pi);
 
 if nargin <= 1

@@ -4,7 +4,8 @@ function circ_vmm_est_em(data)
 %   Audio Circular Statistics (ACS) library
 %   Copyright 2016 Enzo De Sena
 
-data = data(:);
+%% Asserts
+assert(iscolumn(data));
 
 all_data = linspace(-pi, pi, 1000);
 

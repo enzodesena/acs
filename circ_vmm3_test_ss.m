@@ -1,9 +1,11 @@
 function [H, P, llrt, exitflag] = circ_vmm3_test_ss(data, mu_0, alpha, options)
-%CIRC_VMM3_TEST_SS one sample test for vMUM model
+%CIRC_VMM3_TEST_SS one sample test for vMM3 model
 %
 %   Audio Circular Statistics (ACS) library
 %   Copyright 2016 Enzo De Sena
 
+%% Asserts
+assert(iscolumn(data));
 
 if nargin <= 1 || isempty(mu_0)
     mu_0 = 0;
