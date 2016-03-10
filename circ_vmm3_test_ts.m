@@ -1,4 +1,4 @@
-function [H, P, llrt, exitflag] = circ_vmm3_test_ts(data_a, data_b, alpha, options)
+function [H, P, llr, exitflag] = circ_vmm3_test_ts(data_a, data_b, alpha, options)
 %CIRC_VMUM_TEST_SS one sample test for vMUM model
 %
 %   Audio Circular Statistics (ACS) library
@@ -34,20 +34,33 @@ mu = circ_mean([data_a(:); data_b(:)]);
     circ_vmm3_est_ml_null(data_a, mu, options);
 [k_b_ml_0, p_b_ml_0, ll_b_0, exitflag_b_0] = ...
     circ_vmm3_est_ml_null(data_b, mu, options);
-ll_0 = ll_a_0 + ll_b_0;
-exitflag_0 = min(exitflag_a_0, exitflag_b_0);
+
+[params_null, ll_null_neg, exitflag_null] = fmincon(@(params) ...
+                   -sum(log(circ_vmm_pdf([params(1), params(1)+pi], ...
+                                         [params(2), params(2)], ...
+                                         [params(3), 1-params(3)], data_a)))...
+                   -sum(log(circ_vmm_pdf([params(1), params(1)+pi], ...
+                                         [params(4), params(4)], ...
+                                         [params(5), 1-params(5)], data_b))), ...
+                   [mu, k_a_ml_0, p_a_ml_0, k_b_ml_0, p_b_ml_0], [], [], ...
+                   [], [], ...
+                   [-inf, -inf, 0, -inf, 0], [inf, inf, 1, inf, 1], ...
+                   [], options);
+ll_0 = -ll_null_neg;
+assert(ll_0 >= ll_a_0 + ll_b_0);
+exitflag_0 = min(min(exitflag_a_0, exitflag_b_0), exitflag_null);
 
 %% Calculate ll of alternate hypothesis
 [ll_a_1, exitflag_a_1] = ...
-    circ_vmm3_est_ml_alt(data_a, mu, k_a_ml_0, p_a_ml_0, options);
+    circ_vmm3_est_ml_alt(data_a, params_null(1), params_null(2), params_null(3), options);
 [ll_b_1, exitflag_b_1] = ...
-    circ_vmm3_est_ml_alt(data_b, mu, k_b_ml_0, p_b_ml_0, options);
+    circ_vmm3_est_ml_alt(data_b, params_null(1), params_null(4), params_null(5), options);
 ll_1 = ll_a_1 + ll_b_1;
 exitflag_1 = min(exitflag_a_1, exitflag_b_1);
 
 %% Run test
-llrt = 2*(ll_1-ll_0);
-P = 1 - chi2cdf(llrt, 1);
+llr = 2*(ll_1-ll_0);
+P = 1 - chi2cdf(llr, 1);
 H = P < alpha;
 exitflag = min(exitflag_0, exitflag_1);
 
