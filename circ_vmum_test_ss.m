@@ -42,7 +42,7 @@ ll_0 = -ll_0_neg;
 
 %% Calculate ll of alternate hypothesis
 % Calculate ML estimate of parameters, using the previous ML
-% estimate as starting poitn. This ensures that LLRT > 0, 
+% estimate as starting point. This ensures that LLRT > 0, 
 % but is not guaranteed to find the best log-likelihood, 
 % since it often happens that algorithm gets stuck 
 % in a local minimum near the solution with mu=mu_0.
