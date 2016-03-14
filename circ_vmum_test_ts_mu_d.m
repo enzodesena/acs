@@ -1,11 +1,11 @@
-function [H, P, llr, exitflag] = circ_vmum_test_ts(data_a, data_b, alpha, options)
+function [H, P, llr, exitflag] = circ_vmum_test_ts_mu_d(data_x, data_y, alpha, options)
 %CIRC_VMUM_TEST_SS one sample test for vMUM model
 %
 %   Audio Circular Statistics (ACS) library
 %   Copyright 2016 Enzo De Sena
 
-assert(iscolumn(data_a));
-assert(iscolumn(data_b));
+assert(iscolumn(data_x));
+assert(iscolumn(data_y));
 
 if nargin <= 3 || isempty(alpha)
     alpha = 0.05;
@@ -20,26 +20,26 @@ if nargin <= 4
 end
 
 %% Assert
-assert(iscolumn(data_a));
-assert(iscolumn(data_b));
+assert(iscolumn(data_x));
+assert(iscolumn(data_y));
 assert(isscalar(alpha));
 
 %% Calculate ll of null hypothesis
 % Calculate mu for entire set
-mu = circ_mean([data_a(:); data_b(:)]);
+mu = circ_mean([data_x(:); data_y(:)]);
 
 % Calculate ML of parameters, assuming mu=mu_0 and with 
 % starting point using vMUM-MM method
 [k_a_ml_0, p1_a_ml_0, p2_a_ml_0, p3_a_ml_0, ll_a_0, exitflag_a_0] = ...
-    circ_vmum_est_ml_null(data_a, mu, options);
+    circ_vmum_est_ml_null(data_x, mu, options);
 [k_b_ml_0, p1_b_ml_0, p2_b_ml_0, p3_b_ml_0, ll_b_0, exitflag_b_0] = ...
-    circ_vmum_est_ml_null(data_b, mu, options);
+    circ_vmum_est_ml_null(data_y, mu, options);
 
 [params_null, ll_null_neg, exitflag_null] = ...
   fmincon(@(params)-circ_vmum_ll(params(1), params(2), ...
-                                 params(3), params(4), params(5), data_a, true)...
+                                 params(3), params(4), params(5), data_x, true)...
                    -circ_vmum_ll(params(1), params(6), params(7), ...
-                                 params(8), params(9), data_b, true), ...
+                                 params(8), params(9), data_y, true), ...
                    [mu, k_a_ml_0, p1_a_ml_0, p2_a_ml_0, p3_a_ml_0,...
                     k_b_ml_0, p1_b_ml_0, p2_b_ml_0, p3_b_ml_0], [], [], ...
                    [0, 0, 1, 1, 1, 0, 0, 0, 0; 0, 0, 0, 0, 0, 0, 1, 1, 1], [1; 1], ...
@@ -52,10 +52,10 @@ exitflag_0 = min(min(exitflag_a_0, exitflag_b_0), exitflag_null);
 
 %% Calculate ll of alternate hypothesis
 [ll_a_1, exitflag_a_1] = ...
-    circ_vmum_est_ml_alt(data_a, params_null(1), params_null(2), ...
+    circ_vmum_est_ml_alt(data_x, params_null(1), params_null(2), ...
                          params_null(3), params_null(4), params_null(5), options);
 [ll_b_1, exitflag_b_1] = ...
-    circ_vmum_est_ml_alt(data_b, params_null(1), params_null(6), params_null(7), ...
+    circ_vmum_est_ml_alt(data_y, params_null(1), params_null(6), params_null(7), ...
                          params_null(8), params_null(9), options);
 ll_1 = ll_a_1 + ll_b_1;
 exitflag_1 = min(exitflag_a_1, exitflag_b_1);
