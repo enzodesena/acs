@@ -28,7 +28,9 @@ assert(isscalar(alpha));
 %% Calculate ll of null hypothesis
 % Calculate ML of parameters, assuming mu=mu_0 and with 
 % starting point using vMUM-MM method
-[mu_ml_0, k_ml_0, p_ml_0, ll_0, exitflag_0] = circ_vmm3_est_ml([data_a; data_b]);
+[mu_mm_0, k_mm_0, p_mm_0] = circ_vmm3_est_mm([data_a; data_b]);
+[mu_ml_0, k_ml_0, p_ml_0, ll_0, exitflag_0] = ...
+    circ_vmm3_est_ml([data_a; data_b], mu_mm_0, k_mm_0, p_mm_0, options);
 
 
 %% Calculate ll of alternate hypothesis
