@@ -13,8 +13,17 @@ function [mu_hat, k_hat, p_hat, ll, exitflag, output] = ...
 
 %% Initial point
 assert(iscolumn(data));
-if nargin == 1
-    [mu_0, k_0, p_0] = circ_vmm3_est_mm(data);
+if nargin <= 1 || isempty(mu_0) || isempty(k_0) || isempty(p_0)
+    [mu_0_mm, k_0_mm, p_0_mm] = circ_vmm3_est_mm(data);
+    if nargin <= 1 || isempty(mu_0)
+        mu_0 = mu_0_mm;
+    end
+    if nargin <= 2 || isempty(k_0)
+        k_0 = k_0_mm;
+    end
+    if nargin <= 3 || isempty(p_0)
+        p_0 = p_0_mm;
+    end
 end
 
 %% Add options to fmincon
@@ -26,12 +35,12 @@ end
 
 %% Asserts
 assert(isscalar(mu_0) & isscalar(k_0) & isscalar(p_0));
-assert(isvector(data));
+assert(iscolumn(data));
 
 %% Run
 [mu_0, k_0, p_0] = circ_vmm3_standard(mu_0, k_0, p_0);
 [params, ll_neg, exitflag, output] = fmincon(@(params) ...
-                   -circ_vmm3_ll(mu_0, k_0, p_0, data), ...
+                   -circ_vmm3_ll(params(1), params(2), params(3), data), ...
                    [mu_0, k_0, p_0], [], [], ...
                    [], [], ...
                    [-inf, -inf, 0], [inf, inf, 1], ...
