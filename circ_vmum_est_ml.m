@@ -13,8 +13,24 @@ function [mu_hat, k_hat, p1_hat, p2_hat, p3_hat, ll, exitflag, output] = ...
 
 %% Initial point
 assert(iscolumn(data));
-if nargin == 1
-    [mu_0, k_0, p1_0, p2_0, p3_0] = circ_vmum_est_mm(data);
+if nargin <= 1 || isempty(mu_0) || isempty(k_0) || isempty(p1_0) ||...
+        isempty(p2_0) || isempty(p3_0)
+    [mu_0_mm, k_0_mm, p1_0_mm, p2_0_mm, p3_0_mm] = circ_vmum_est_mm(data);
+    if nargin <= 1 || isempty(mu_0)
+        mu_0 = mu_0_mm;
+    end
+    if nargin <= 2 || isempty(k_0)
+        k_0 = k_0_mm;
+    end
+    if nargin <= 3 || isempty(p1_0)
+        p1_0 = p1_0_mm;
+    end
+    if nargin <= 4 || isempty(p2_0)
+        p2_0 = p2_0_mm;
+    end
+    if nargin <= 5 || isempty(p3_0)
+        p3_0 = p3_0_mm;
+    end
 end
 
 %% Add options to fmincon
