@@ -1,4 +1,4 @@
-function [H, P, llr, exitflag] = circ_vmum_test_ts_k(data_x, data_y, alpha, options)
+function [H, P, llr, exitflag] = circ_vmum_test_ts_k_d(data_x, data_y, alpha, options)
 %CIRC_VMUM_TEST_SS one sample test for vMUM model
 %
 %   Audio Circular Statistics (ACS) library

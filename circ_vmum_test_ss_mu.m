@@ -1,4 +1,4 @@
-function [H, P, llrt, exitflag] = circ_vmum_test_ss(data, mi, alpha, options)
+function [H, P, llrt, exitflag] = circ_vmum_test_ss_mu(data, mi, alpha, options)
 %CIRC_VMUM_TEST_SS one sample test for vMUM model
 %
 %   Audio Circular Statistics (ACS) library
