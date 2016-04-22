@@ -26,7 +26,7 @@ R = circ_r([data_x; data_y]);
 options = optimset('Display', 'off') ;
 k_hat_12 = fsolve(@(x)besseli(1,x)./besseli(0,x) - ...
             (R_x.*N_x./N + R_y.*N_y./N), 1, options);
-        
+
 % Book: not working
 %llrt = 2*(k_hat_12*(R_x+R_y) - k_hat*R - log(besseli(0, k_hat_12)) + log(besseli(0, k_hat)));
 % Corrected from book, but only valid for N_x=N_y
