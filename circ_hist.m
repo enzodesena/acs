@@ -11,7 +11,7 @@ if nargin == 1
     resolution = pi/100;
 end
 
-if nargin < 2
+if nargin <= 2
     linespec = '';
 end
 
