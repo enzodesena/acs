@@ -12,11 +12,6 @@ if nargin <= 2 || isempty(alpha)
     alpha = 0.05;
 end
 
-if nargin <= 3 || isempty(same_k)
-    same_k = true;
-end
-
-
 
 %% Assert
 assert(iscolumn(data_x));
