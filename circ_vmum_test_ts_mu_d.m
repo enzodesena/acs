@@ -1,5 +1,5 @@
 function [H, P, llr, exitflag] = circ_vmum_test_ts_mu_d(data_x, data_y, alpha, options)
-%CIRC_VMUM_TEST_SS one sample test for vMUM model
+%CIRC_VMUM_TEST_TS_MU_S two sample test for vMUM model
 %
 %   Audio Circular Statistics (ACS) library
 %   Copyright 2016 Enzo De Sena

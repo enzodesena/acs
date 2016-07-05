@@ -1,5 +1,11 @@
 function [H, P, llrt] = circ_vm_test_ts_mu(data_x, data_y, alpha)
-%CIRC_VMUM_REST_ONE_SAMPLE_MM one sample test for vMUM model
+%CIRC_VMUM_REST_ONE_SAMPLE_MM two sample test for vMUM model
+%   assuming the two distributions have the same concentration parameter.
+%   This test is taken from Mardia, 2009, page 132, equation 7.3.17.
+%   Please notice that the equation contains an error. I verified this
+%   by calculating the true LLRT and confirmed that the correct version
+%   satisfies the chi-squared asymptotic approximation, while the one
+%   in the book doesn't. This script uses the correct version.
 %
 %   Audio Circular Statistics (ACS) library
 %   Copyright 2016 Enzo De Sena

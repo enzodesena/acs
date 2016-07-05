@@ -1,5 +1,7 @@
 function [H, P, llrt] = circ_vm_test_ts_mu_d(data_x, data_y, alpha)
-%CIRC_VMUM_REST_ONE_SAMPLE_MM one sample test for vMUM model
+%CIRC_VMUM_REST_ONE_SAMPLE_MM two sample test for vMUM model
+% with different estimates of 'k'. I derived this test, but I need to
+% double-check the math.
 %
 %   Audio Circular Statistics (ACS) library
 %   Copyright 2016 Enzo De Sena
