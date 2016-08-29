@@ -1,38 +1,47 @@
-function [mus, kappas, alphas, posterior] = hyper_vmfm_est_em(x, H, J)
-%CIRC_VMUM_TEST_SS two sample test for vMUM model
-%   assuming they have the same concentration parameter.
-%
+function [mus, kappas, alphas, posterior] = ...
+    hyper_vmfm_est_em(x, num_components, num_iterations, ...
+                      alphas, mus, kappas)
+%hyper_vmfm_est_em 
+% 
 %   Directional Statistics Toolbox (DirStat)
 %   Copyright 2016 Enzo De Sena
-
 
 [N, D] = size(x);
 assert(D == 3);
 
+
+if nargin <= 2
+    num_iterations = 10;
+end
+if nargin <= 3
+    alphas = ones(num_components,1)/num_components;
+end
+if nargin <= 4
+    mus = rand(num_components, D);
+    mus = mus ./ repmat(sqrt(sum(mus.^2, 2)), 1, D);
+end
+if nargin <= 5
+    kappas = rand(num_components, 1);
+end
+
 %% Initialization
-alphas = ones(H,1)/H;
-mus = rand(D, H);
-mus = mus ./ repmat(sqrt(sum(mus.^2)), D, 1);
-kappas = rand(H, 1);
+posterior = nan(N, num_components);
 
-posterior = nan(H, N);
-
-for j=1:J
+for j=1:num_iterations
     ptot = zeros(N, 1);
-    for h=1:H
-        ptot = ptot + alphas(h)*hyper_vmfpdf(mus(:, h), kappas(h), x);
+    for h=1:num_components
+        ptot = ptot + alphas(h).*hyper_vmfpdf(mus(h, :), kappas(h), x);
     end
 
     % ps is a matrix that contains the probability 
     
-    for h=1:H
-        posterior(h, :) = alphas(h).*hyper_vmfpdf(mus(:, h), kappas(h), x)./ptot;
+    for h=1:num_components
+        posterior(:, h) = alphas(h).*hyper_vmfpdf(mus(h, :), kappas(h), x)./ptot;
         
-        alphas(h) = mean(posterior(h, :));
-        rh = sum(repmat(posterior(h, :), D, 1).*x, 2);
-        mus(:, h) = rh/norm(rh);
-        kappas(h) = fsolve(@(x)besseli(D/2,x)./besseli(D/2-1,x)-norm(rh)/N, 1);
+        alphas(h) = mean(posterior(:, h));
+        rh = sum(repmat(posterior(:, h), 1, D).*x, 1);
+        mus(h, :) = rh./norm(rh);
+        kappas(h) = fsolve(@(kappa)besseli(D/2,kappa)./besseli(D/2-1,kappa)-norm(rh)/(N*alphas(h)), 1);
     end
 end
-    
 end
