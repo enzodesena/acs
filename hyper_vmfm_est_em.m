@@ -6,7 +6,8 @@ function [mus, kappas, alphas, posterior] = hyper_vmfm_est_em(x, H, J)
 %   Copyright 2016 Enzo De Sena
 
 
-[D, N] = size(x);
+[N, D] = size(x);
+assert(D == 3);
 
 %% Initialization
 alphas = ones(H,1)/H;
@@ -19,13 +20,13 @@ posterior = nan(H, N);
 for j=1:J
     ptot = zeros(N, 1);
     for h=1:H
-        ptot = ptot + alphas(h)*sph_vmfpdf(mus(:, h), kappas(h), x);
+        ptot = ptot + alphas(h)*hyper_vmfpdf(mus(:, h), kappas(h), x);
     end
 
     % ps is a matrix that contains the probability 
     
     for h=1:H
-        posterior(h, :) = alphas(h).*sph_vmfpdf(mus(:, h), kappas(h), x)./ptot;
+        posterior(h, :) = alphas(h).*hyper_vmfpdf(mus(:, h), kappas(h), x)./ptot;
         
         alphas(h) = mean(posterior(h, :));
         rh = sum(repmat(posterior(h, :), D, 1).*x, 2);
