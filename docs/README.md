@@ -28,7 +28,7 @@ run_tests
 
 ## Authors
 
-* **Enzo De Sena** - *Initial work* - [desena.org](https://desena.org)
+* **Enzo De Sena** - [desena.org](https://desena.org)
 
 ## License
 
